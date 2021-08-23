@@ -30,5 +30,12 @@ namespace ProductWebAPI.Controllers
         {
             return await productRepository.GetByIdAsync(id);
         }
+
+        [HttpPost]
+        public async Task AddAsync(Product newProduct)
+        {
+            await productRepository.AddAsync(newProduct);
+            await productRepository.CommitAsync();
+        }
     }
 }

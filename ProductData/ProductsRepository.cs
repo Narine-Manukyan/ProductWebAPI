@@ -18,7 +18,7 @@ namespace ProductData
 
         public async Task AddAsync(Product newProduct)
         {
-            throw new NotImplementedException();
+            await db.AddAsync(newProduct);
         }
 
         public async Task<int> CommitAsync()
