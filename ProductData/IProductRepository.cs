@@ -8,7 +8,7 @@ namespace ProductData
     {
         Task<IEnumerable<ProductBase>> GetAllAsync();
         Task<Product> GetByIdAsync(int id);
-        Task Update(Product newProduct);
+        void Update(Product newProduct);
         Task AddAsync(Product newProduct);
         Task<bool> Delete(int id);
         Task<int> CommitAsync();

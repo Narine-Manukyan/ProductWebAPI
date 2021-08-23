@@ -41,9 +41,10 @@ namespace ProductData
             return await db.Products.FindAsync(id);
         }
 
-        public Task Update(Product newProduct)
+        public void Update(Product newProduct)
         {
-            throw new NotImplementedException();
+            var entity = db.Products.Attach(newProduct);
+            entity.State = EntityState.Modified;
         }
     }
 }

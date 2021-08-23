@@ -37,5 +37,12 @@ namespace ProductWebAPI.Controllers
             await productRepository.AddAsync(newProduct);
             await productRepository.CommitAsync();
         }
+
+        [HttpPut]
+        public async Task Update(Product newProduct)
+        {
+            productRepository.Update(newProduct);
+            await productRepository.CommitAsync();
+        }
     }
 }
