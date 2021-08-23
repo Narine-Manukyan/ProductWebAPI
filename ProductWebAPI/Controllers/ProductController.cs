@@ -18,9 +18,17 @@ namespace ProductWebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("Products")]
         public async Task<IEnumerable<ProductBase>> GetAll()
         {
             return await productRepository.GetAllAsync();
+        }
+
+        [HttpGet]
+        [Route("Products/{id:int}")]
+        public async Task<Product> GetByID(int id)
+        {
+            return await productRepository.GetByIdAsync(id);
         }
     }
 }

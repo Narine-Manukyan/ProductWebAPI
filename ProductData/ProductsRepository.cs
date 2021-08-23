@@ -38,7 +38,7 @@ namespace ProductData
 
         public async Task<Product> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await db.Products.FindAsync(id);
         }
 
         public Task Update(Product newAccount)
