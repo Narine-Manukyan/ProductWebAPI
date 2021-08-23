@@ -26,9 +26,11 @@ namespace ProductData
             return await db.SaveChangesAsync();
         }
 
-        public Task<bool> Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(id);
+            if (product != null)
+                db.Remove(product);
         }
 
         public async Task<IEnumerable<ProductBase>> GetAllAsync()

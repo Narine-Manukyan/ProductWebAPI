@@ -44,5 +44,12 @@ namespace ProductWebAPI.Controllers
             productRepository.Update(newProduct);
             await productRepository.CommitAsync();
         }
+
+        [HttpDelete]
+        public async Task Delete(int id)
+        {
+            await productRepository.DeleteAsync(id);
+            await productRepository.CommitAsync();
+        }  
     }
 }

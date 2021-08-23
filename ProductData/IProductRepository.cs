@@ -10,7 +10,7 @@ namespace ProductData
         Task<Product> GetByIdAsync(int id);
         void Update(Product newProduct);
         Task AddAsync(Product newProduct);
-        Task<bool> Delete(int id);
+        Task DeleteAsync(int id);
         Task<int> CommitAsync();
     }
 }
