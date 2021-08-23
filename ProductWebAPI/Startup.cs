@@ -25,7 +25,7 @@ namespace ProductWebAPI
             {
                 options.UseSqlServer(Configuration.GetConnectionString("ProductDb"));
             });
-            services.AddScoped<IProductData, ProductsData>();
+            services.AddScoped<IProductRepository, ProductsRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

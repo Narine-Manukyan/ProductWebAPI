@@ -10,7 +10,7 @@ using ProductData;
 namespace ProductData.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20210822131134_initialcreate")]
+    [Migration("20210823131659_initialcreate")]
     partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,8 +40,8 @@ namespace ProductData.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

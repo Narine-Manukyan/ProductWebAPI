@@ -1,13 +1,22 @@
-﻿using ProductCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductData
 {
-    public class ProductsData : IProductData
+    public class ProductsRepository : IProductRepository
     {
-        public Task Add(Product newAccount)
+        private readonly ProductDbContext db;
+
+        public ProductsRepository(ProductDbContext db)
+        {
+            this.db = db;
+        }
+
+        public async Task AddAsync(Product newAccount)
         {
             throw new NotImplementedException();
         }
@@ -22,12 +31,12 @@ namespace ProductData
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<ProductBase>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await db.Products.ToListAsync<ProductBase>();
         }
 
-        public Task<Product> GetById(int id)
+        public async Task<Product> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }

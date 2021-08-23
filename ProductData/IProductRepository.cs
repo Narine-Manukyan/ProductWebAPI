@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 namespace ProductData
 {
-    public interface IProductData
+    public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAll();
-        Task<Product> GetById(int id);
+        Task<IEnumerable<ProductBase>> GetAllAsync();
+        Task<Product> GetByIdAsync(int id);
         Task Update(Product newAccount);
-        Task Add(Product newAccount);
+        Task AddAsync(Product newAccount);
         Task<bool> Delete(int id);
         int Commit();
     }
