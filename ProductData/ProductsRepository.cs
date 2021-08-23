@@ -16,14 +16,14 @@ namespace ProductData
             this.db = db;
         }
 
-        public async Task AddAsync(Product newAccount)
+        public async Task AddAsync(Product newProduct)
         {
             throw new NotImplementedException();
         }
 
-        public int Commit()
+        public async Task<int> CommitAsync()
         {
-            throw new NotImplementedException();
+            return await db.SaveChangesAsync();
         }
 
         public Task<bool> Delete(int id)
@@ -41,7 +41,7 @@ namespace ProductData
             return await db.Products.FindAsync(id);
         }
 
-        public Task Update(Product newAccount)
+        public Task Update(Product newProduct)
         {
             throw new NotImplementedException();
         }
