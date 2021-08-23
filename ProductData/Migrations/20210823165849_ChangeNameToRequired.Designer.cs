@@ -10,8 +10,8 @@ using ProductData;
 namespace ProductData.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20210823131659_initialcreate")]
-    partial class initialcreate
+    [Migration("20210823165849_ChangeNameToRequired")]
+    partial class ChangeNameToRequired
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,7 @@ namespace ProductData.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")

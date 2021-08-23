@@ -9,6 +9,11 @@ namespace ProductData
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>().HasIndex(p => p.Name).IsUnique();
+        }
+
         public DbSet<Product> Products { get; set; }
     }
 }
