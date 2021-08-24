@@ -16,21 +16,21 @@ namespace ProductData
             this.db = db;
         }
 
-        public async Task AddAsync(Product newProduct)
+        public async Task<Product> AddAsync(Product newProduct)
         {
-            await db.AddAsync(newProduct);
-        }
-
-        public async Task<int> CommitAsync()
-        {
-            return await db.SaveChangesAsync();
+            var result =  await db.Products.AddAsync(newProduct);
+            await db.SaveChangesAsync();
+            return result.Entity;
         }
 
         public async Task DeleteAsync(int id)
         {
             var product = await GetByIdAsync(id);
             if (product != null)
+            {
                 db.Remove(product);
+                await db.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<ProductBase>> GetAllAsync()
@@ -43,10 +43,21 @@ namespace ProductData
             return await db.Products.FindAsync(id);
         }
 
-        public void Update(Product newProduct)
+        public async Task<Product> UpdateAsync(Product newProduct)
         {
-            var entity = db.Products.Attach(newProduct);
-            entity.State = EntityState.Modified;
+            var result = await db.Products
+                .FirstOrDefaultAsync(e => e.Id == newProduct.Id);
+
+            if (result != null)
+            {
+                result.Name = newProduct.Name;
+                result.Price = newProduct.Price;
+                result.Available = newProduct.Available;
+                result.Description = newProduct.Description;
+                result.DateCreated = newProduct.DateCreated;
+                await db.SaveChangesAsync();
+            }
+            return result;
         }
     }
 }
