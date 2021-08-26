@@ -18,7 +18,7 @@ namespace ProductData
 
         public async Task<Product> AddAsync(Product newProduct)
         {
-            var result =  await db.Products.AddAsync(newProduct);
+            var result = await db.Products.AddAsync(newProduct);
             await db.SaveChangesAsync();
             return result.Entity;
         }
@@ -45,19 +45,20 @@ namespace ProductData
 
         public async Task<Product> UpdateAsync(Product newProduct)
         {
-            var result = await db.Products
-                .FirstOrDefaultAsync(e => e.Id == newProduct.Id);
+            var productToUpdate = await GetByIdAsync(newProduct.Id);
+            db.Entry(productToUpdate).Property("RowVersion").OriginalValue = newProduct.RowVersion;
 
-            if (result != null)
+
+            if (productToUpdate != null)
             {
-                result.Name = newProduct.Name;
-                result.Price = newProduct.Price;
-                result.Available = newProduct.Available;
-                result.Description = newProduct.Description;
-                result.DateCreated = newProduct.DateCreated;
+                productToUpdate.Name = newProduct.Name;
+                productToUpdate.Price = newProduct.Price;
+                productToUpdate.Available = newProduct.Available;
+                productToUpdate.Description = newProduct.Description;
+                productToUpdate.DateCreated = newProduct.DateCreated;
                 await db.SaveChangesAsync();
             }
-            return result;
+            return newProduct;
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProductCore;
 using ProductData;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductWebAPI.Controllers
@@ -85,11 +87,25 @@ namespace ProductWebAPI.Controllers
                 var productToUpdate = await productRepository.GetByIdAsync(id);
                 if (productToUpdate == null)
                 {
-                    return NotFound($"Employee with Id = {id} not found");
+                    return NotFound($"Employee with Id = {id} was deleted by another user");
                 }
-
+                
                 var updatedProduct = await productRepository.UpdateAsync(newProduct);
                 return updatedProduct;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                var exceptionEntry = ex.Entries.Single();
+                var dbEntry = await exceptionEntry.GetDatabaseValuesAsync();
+                if (dbEntry == null)
+                {
+                    return NotFound($"Employee with Id = {id} was already deleted");
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status409Conflict,
+                                   $"Employee with Id = {id} was modifed by another user after you got the original values.");
+                }
             }
             catch (Exception)
             {
@@ -107,10 +123,24 @@ namespace ProductWebAPI.Controllers
                 var productToDelete = await productRepository.GetByIdAsync(id);
                 if (productToDelete == null)
                 {
-                    return NotFound($"Product with id = {id} not found");
+                    return NotFound($"Employee with Id = {id} was not found or deleted by another user");
                 }
                 await productRepository.DeleteAsync(id);
                 return Ok();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                var exceptionEntry = ex.Entries.Single();
+                var dbEntry = await exceptionEntry.GetDatabaseValuesAsync();
+                if (dbEntry == null)
+                {
+                    return NotFound($"Employee with Id = {id} was not found or deleted by another user");
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status409Conflict,
+                                   $"Employee with Id = {id} was modified by another user after you got the original values.");
+                }
             }
             catch (Exception)
             {
