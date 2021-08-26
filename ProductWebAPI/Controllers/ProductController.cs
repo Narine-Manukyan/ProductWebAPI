@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductCore;
 using ProductData;
@@ -55,6 +56,7 @@ namespace ProductWebAPI.Controllers
         }
 
         [HttpPost("Products")]
+        [Authorize]
         public async Task<ActionResult<Product>> AddAsync(Product newProduct)
         {
             try
@@ -73,6 +75,7 @@ namespace ProductWebAPI.Controllers
         }
 
         [HttpPut("Products/{id:int}")]
+        [Authorize]
         public async Task<ActionResult<Product>> Update(int id, Product newProduct)
         {
             try
@@ -96,6 +99,7 @@ namespace ProductWebAPI.Controllers
         }
 
         [HttpDelete("Products/{id:int}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             try
